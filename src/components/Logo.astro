@@ -1,9 +1,20 @@
 ---
 import { SITE } from 'astrowind:config';
+import LogoSvg from '~/assets/images/logo.svg';
 ---
 
-<span
-  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
+<div
+  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-[30px] font-bold text-gray-900 whitespace-nowrap dark:text-white flex items-center gap-2"
 >
-  🚀 {SITE?.name}
-</span>
+  <LogoSvg class="size-10" /> 
+  <span class="whitespace-pre-line bg-gradient-blue-white bg-clip-text text-transparent font-audiowide">{SITE?.name}</span>
+</div>
+
+<style>
+.bg-gradient-blue-white {
+  background: linear-gradient(330deg, #6597D6, #6CD9AE);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>

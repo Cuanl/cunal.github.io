@@ -1,4 +1,4 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { getPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
   links: [
@@ -90,11 +90,11 @@ export const headerData = {
       links: [
         {
           text: 'Blog List',
-          href: getBlogPermalink(),
+          href: getPermalink('/blog'), // TODO: 待更新 src/pages/blog/index.astro 元件
         },
         {
           text: 'Article',
-          href: getPermalink('get-started-website-with-astro-tailwind-css', 'post'),
+          href: getPermalink('get-started-website-with-astro-tailwind-css', 'post'), // TODO: 待研究 getPermalink 用法
         },
         {
           text: 'Article (with MDX)',

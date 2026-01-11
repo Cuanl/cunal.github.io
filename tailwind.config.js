@@ -1,6 +1,6 @@
+import typographyPlugin from '@tailwindcss/typography';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import plugin from 'tailwindcss/plugin';
-import typographyPlugin from '@tailwindcss/typography';
 
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,json,md,mdx,svelte,ts,tsx,vue}'],
@@ -17,6 +17,7 @@ export default {
         sans: ['var(--aw-font-sans, ui-sans-serif)', ...defaultTheme.fontFamily.sans],
         serif: ['var(--aw-font-serif, ui-serif)', ...defaultTheme.fontFamily.serif],
         heading: ['var(--aw-font-heading, ui-sans-serif)', ...defaultTheme.fontFamily.sans],
+        audiowide: ['Audiowide', 'sans-serif'],
       },
 
       animation: {

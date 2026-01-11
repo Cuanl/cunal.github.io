@@ -11,5 +11,17 @@
   "yaml.schemas": {
     "./.vscode/astrowind/config-schema.json": "/src/config.yaml"
   },
-  "eslint.useFlatConfig": true
+  "eslint.useFlatConfig": true,
+  "cSpell.words": [
+    "astrolib",
+    "astrowind",
+    "audiowide",
+    "Cuanl",
+    "iconify",
+    "limax",
+    "onwidget",
+    "partytown",
+    "tabler",
+    "unpic"
+  ]
 }
