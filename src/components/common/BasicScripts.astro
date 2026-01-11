@@ -88,14 +88,17 @@ import { UI } from 'astrowind:config';
         case 'twitter':
           href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
           break;
-        case 'linkedin':
-          href = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${text}`;
+        case 'threads':
+          // Threads 分享（使用類似 Twitter 的方式）
+          href = `https://threads.net/intent/post?text=${text}%20${url}`;
           break;
-        case 'whatsapp':
-          href = `https://wa.me/?text=${text}%20${url}`;
+        case 'line':
+          // LINE 分享
+          href = `https://social-plugins.line.me/lineit/share?url=${url}`;
           break;
-        case 'mail':
-          href = `mailto:?subject=%22${text}%22&body=${text}%20${url}`;
+        case 'telegram':
+          // Telegram 分享
+          href = `https://t.me/share/url?url=${url}&text=${text}`;
           break;
 
         default:
