@@ -1,6 +1,6 @@
 ---
 publishDate: 2020-02-21T10:25:33
-title:  "[Telegram懶人包]1-1 什麼是Telegram (*´･д･)?"
+title:  "[Telegram懶人包] 1-1 什麼是Telegram (*´･д･)?"
 excerpt: 什麼是Telegram (*´･д･)?
 image: https://blog-image.cuanl.app/telegram-layz-pack/cover.webp
 category: App

@@ -3,17 +3,18 @@ import { fileURLToPath } from 'url';
 
 import { defineConfig } from 'astro/config';
 
-import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
-import icon from 'astro-icon';
-import compress from 'astro-compress';
+import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
+import tailwind from '@astrojs/tailwind';
 import type { AstroIntegration } from 'astro';
+import compress from 'astro-compress';
+import icon from 'astro-icon';
 
 import astrowind from './vendor/integration';
 
-import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
+import { lazyImagesRehypePlugin, readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -28,6 +29,7 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
+    react(),
     sitemap(),
     mdx(),
     icon({
