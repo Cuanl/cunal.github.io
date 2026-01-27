@@ -1,5 +1,5 @@
 ---
-date: 2019-04-17T10:13:05
+publishDate: 2019-04-17T10:13:05
 title:  Vue初階入門教學
 excerpt: Vue.js 是什麼？ 它是JavaScript的一個框架，可以讓我們快速的開發專案，且他具有動態資料處理的特色... 
 image: https://blog-image.cuanl.app/20190417-vue-begininng/20190417-01.png
