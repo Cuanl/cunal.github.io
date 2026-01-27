@@ -1,6 +1,6 @@
 ---
 publishDate: 2020-02-21T10:23:25
-title:  "[Telegram懶人包]3-5 排程訊息"
+title:  "[Telegram懶人包] 3-5 排程訊息"
 excerpt: "Telegram 排程訊息"
 image: https://github.com/hanc1027-articles/Telegram_Intro/blob/master/Ep2%E7%A7%81%E8%A8%8A%E7%AF%87/assets/3_5_time_message.gif?raw=true
 category: App

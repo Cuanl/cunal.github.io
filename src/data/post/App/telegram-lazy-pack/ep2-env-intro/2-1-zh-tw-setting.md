@@ -1,6 +1,6 @@
 ---
 publishDate: 2020-02-21T10:24:33
-title:  "[Telegram懶人包]2-1 中文化設定"
+title:  "[Telegram懶人包] 2-1 中文化設定"
 excerpt: "Telegram 中文化設定"
 image: https://blog-image.cuanl.app/telegram-layz-pack/cover.webp
 category: App
