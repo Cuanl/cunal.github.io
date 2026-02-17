@@ -5,14 +5,16 @@ excerpt: 於2024/07/06的Vue Conf上，沈青川大大介紹了新專案 - Vue V
 image: https://miro.medium.com/v2/resize:fit:1400/format:webp/1*QAgKYpqh9iifsmuX0X8rFg.png
 category: Frontend
 tags:
- - javascript
- - vue
+  - javascript
+  - vue
 ---
+
 import React from 'react';
 
 <img className="post-img" src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*QAgKYpqh9iifsmuX0X8rFg.png" />
 
 ## 序言
+
 於2024/07/06的Vue Conf上，沈青川大大介紹了新專案 - [Vue Vine](https://github.com/vue-vine/vue-vine)，其中 "於一個檔寫入多組元件"，就是它最核心的功能。有寫過React是否就會立馬聯想到Function Components，當時看到這一專案時，眼睛為之一亮，可能以前受React影響，有時在寫Vue專案，就想把一些相關元件直接寫在同一檔案，但受於Vue本身SFC限制，只能乖乖地 `cmd+n` 一個個新的Vue檔。
 
 Vine component 是以Function所組成，全名為 **'Vine Component Function'**(官方稱為"VCF")，結合了SFC & JSX優點，讓一個檔案可以寫入多元件外，同時繼續享受Vue的模板語法，將相關元件集中於同一檔案，減少於不同元件中來回切換的痛苦，是不是讓各方面都滿足了呢~
@@ -24,7 +26,7 @@ Vine component 是以Function所組成，全名為 **'Vine Component Function'**
 // IDComponents.vine.ts
 
 export function AddIDBtn() {
-  function addId(){
+  function addId() {
     const id = uuidv4();
     sharedIDs.value.push(id);
   }
@@ -37,49 +39,60 @@ export function AddIDBtn() {
   `;
 }
 ```
+
 ## 需注意的點
+
 - 只支援 **Vue 3.0+** 及 **Vite**
 - 只支援 **TypeScript**
 - 製作多元件時，需使用 `vine` 標籤回傳元件字串
 - 元件需使用 `.vine.ts` 作為副檔名
 - 使用 `${}` 表達式於模板字串中會報錯，因Vine會將其傳遞給 `@vue/compiler-dom` ，進行編譯，所以一樣記得使用`{{}}`表達式
 
-
 了解vue-vine的原由及其特色後，就可以開始入門著手寫元件了！
 
 ## 搭建Vue Vine環境
 
 ### Installation
+
 ```bash
   pnpm i -D vue-vine
 ```
 
 ### 配置Vite
-於vite的配置檔案中，加入以下內容：
-```ts
-  // vite.config.ts
-  import { VineVitePlugin } from 'vue-vine/vite'
 
-  export default defineConfig({
-    plugins: [
-      // ...其他插件
-      VineVitePlugin()
-    ],
-  })
+於vite的配置檔案中，加入以下內容：
+
+```ts
+// vite.config.ts
+import { VineVitePlugin } from 'vue-vine/vite';
+
+export default defineConfig({
+  plugins: [
+    // ...其他插件
+    VineVitePlugin(),
+  ],
+});
 ```
 
 ### 安裝vue-vine的VS Code插件
+
 建議可以安裝，因為它會將語法高亮，以免開發時看到的都是字串格式，最後會寫得眼花撩亂。
 
-<img className="w-full md:w-1/2" src="https://miro.medium.com/v2/resize:fit:584/format:webp/1*CmtMVc9qfV8ZwrS4-koX_Q.png" />
+<img
+  className="w-full md:w-1/2"
+  src="https://miro.medium.com/v2/resize:fit:584/format:webp/1*CmtMVc9qfV8ZwrS4-koX_Q.png"
+/>
 
 - [vscode plugin of vue vine](https://marketplace.visualstudio.com/items?itemName=ShenQingchuan.vue-vine-extension)
 
 ## 實作新增與刪除ID的vue-vine元件
+
 先來看實作出來效果
+
 <img className="post-img" src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*2LpAn2nKtHxMdAg0FeCETg.gif" />
 
 ### 創建多組元件共用的vine檔
+
 ```ts
 // IDComponents.vine.ts
 
@@ -88,7 +101,7 @@ export function AddIDBtn() {
  */
 export function IDBtn() {
   const title = vineProp<string>();
-  const emit = vineEmits(["action"]);
+  const emit = vineEmits(['action']);
 
   return vine`
   <button @click="emit('action')">
@@ -100,8 +113,8 @@ export function IDBtn() {
 /**
  * 此兩組引用，用於下方ID列表顯示與操作
  */
-import { v4 as uuidv4 } from "uuid"; // $pnpm install uuid，安裝後再引用
-import { sharedIDs } from "../store/sharedState"; // 另一個檔案，存放共用變數
+import { v4 as uuidv4 } from 'uuid'; // $pnpm install uuid，安裝後再引用
+import { sharedIDs } from '../store/sharedState'; // 另一個檔案，存放共用變數
 
 /**
  * 列表元件
@@ -121,7 +134,7 @@ export function IDList() {
  * 新增ID按鈕
  */
 export function AddIDBtn() {
-  function addId(){
+  function addId() {
     const id = uuidv4();
     sharedIDs.value.push(id);
   }
@@ -138,7 +151,7 @@ export function AddIDBtn() {
  * 刪除ID按鈕
  */
 export function DeleteIDBtn() {
-  function deleteId(){
+  function deleteId() {
     sharedIDs.value.pop();
   }
 
@@ -165,6 +178,7 @@ export const sharedIDs = ref<string[]>([]);
 `vineProp` & `vineEmits`，即是於vine中欲傳遞參數給子元件時的關鍵字，使用方式與Vue幾乎一樣，只要在腦中覺得應該是這樣的寫法，照著自己的想法走，就能與vine融於一塊了!
 
 ### 引用vine檔元件
+
 ```vue
 // App.vue
 <script setup lang="ts">
@@ -193,13 +207,15 @@ import { AddIDBtn, DeleteIDBtn, IDList } from './components/IDComponents.vine';
 vine中每一function即是一組元件，因此於vue中如何引用元件，在此如法炮製地引用，學習曲線平緩得很。
 
 ## 後話
+
 在寫vue-vine時，其實寫到後來有一點暢快，因為可以參有React彈性寫於Vue之中，滿足我什麼都要的欲望。
 但在一開始，還是踩了一點點的坑，在此跟大家分享一下。
 
 建議可以直接使用vite創建專案，而後再選擇vue + ts，因很習慣直接使用`vue create`，所以在建置時，想說怎麼一直跑不起來，結果…是忘了vue-vine也要使用vite才會運作。現在會記得`Vue` + `Vite` + `TypeScript` → `Vue-Vine`。
 
 另一個坑是，雖然有React的精神在裡面，但還是需要提醒自己這仍是vue專案，因為在寫`IDList()`元件時，一度卡住，想說是不是應該使用`for in` + `return`來實現，而寫出這樣的code:
-```ts
+
+```text
 export function IDList() {
   return vine`
     <ul>
@@ -208,7 +224,7 @@ export function IDList() {
   `;
 }
 ```
-直接又踩了vue-vine的規則，**不能使用 $\{\}**，後來才想到，它就是vue，幹嘛寫複雜呢!
 
+直接又踩了vue-vine的規則，**不能使用 $\{\}**，後來才想到，它就是vue，幹嘛寫複雜呢!
 
 非常感謝有各路大神們，不斷創造新工具，讓大家嘗鮮又能滿足各種開發願望，希望此篇開箱 & 小踩坑的vue vine入門文可以幫助到想將多元件寫於同一檔案作管理的讀者。

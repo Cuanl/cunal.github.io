@@ -4,87 +4,105 @@ title: 使用Vue.js自製響應式Swiper
 excerpt: 有時於專案中，需要製作卡片切換器，第一個想到的就是Swiper.js，而這切換器功能，其實不會非常複雜，自己也能在短時間內，把需求實現出來，同時包含響應式功能，於小螢幕時顯示1張卡片，於大螢幕時顯示2張卡片。
 category: Frontend
 tags:
- - javascript
- - vue
+  - javascript
+  - vue
 ---
+
 import React from 'react';
 
-
 ## 前言
+
 有時於專案中，需要製作卡片切換器，第一個想到的就是Swiper.js，而這切換器功能，其實不會很複雜，自己也能在短時間內，把需求實現出來，同時包含響應式功能。
 
 本篇文章將實現的功能：
 
 **[基礎卡片]**<br/>
+
 - 左右切換查看上下張名片
 - 當顯示的名片是第一張時，左邊的button呈現disabled，反之，顯示最後一張名片時，右邊的button呈現disabled。
 - 視窗於768px以下時，每次只顯示1張名片。視窗於768px以上時，每次顯示2張名片。
 - 滑鼠移至單張名片時，稍放大效果，增加使用者體驗的互動感
 
 **[自動切換]**<br/>
+
 - 保留基本的左右切換鈕
 - 於2秒時，自動切換至下一張
 - 當輪播至最後一張時，下一個會回到第一張
 
 **[卡片旋轉]**<br/>
+
 - 保留下一張按鈕
 - 點按卡片，翻轉至背面，再點一次，翻轉回正面 (使用滑鼠拖拉手勢，也能達成一樣效果)
 
 ## 基礎卡片 - 實作方式
 
-<iframe height="400" style="width: 100%;" scrolling="no" title="Custom RWD Swiper" src="https://codepen.io/hanc1027/embed/jOgNXdQ?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/hanc1027/pen/jOgNXdQ">
-  Custom RWD Swiper</a> by Han.C.Hsu (<a href="https://codepen.io/hanc1027">@hanc1027</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe><br/>
+<iframe
+  height="400"
+  style="width: 100%;"
+  scrolling="no"
+  title="Custom RWD Swiper"
+  src="https://codepen.io/hanc1027/embed/jOgNXdQ?default-tab=html%2Cresult&editable=true"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/hanc1027/pen/jOgNXdQ">Custom RWD Swiper</a> by Han.C.Hsu (
+  <a href="https://codepen.io/hanc1027">@hanc1027</a>) on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+<br />
 
 首先將主要名片區塊以橫向排列，加上一些效果：
 class配置
+
 - `transition-transform`: 告訴瀏覽器對 `transform` 屬性變化添加過渡效果。
 - `duration-500`: 設定動畫過渡時間為 500 毫秒。
 - `ease-in-out`: 設定動畫過渡效果一開始和結束時速度較慢，中間速度較快，提供平滑過渡效果。
 
-
 style配置 transform: **`translateX(-${currentIndex * 100 / visibleCards}%);`**
+
 - `transform`: CSS 的 `transform` 屬性用來移動或改變元素的形狀，這裡是通過 translateX 改變元素的橫向位移。
 - `translateX`: `translateX` 用於將元素在水平方向上移動，負值表示向左移動，正值表示向右移動。
-- `${currentIndex * 100 / visibleCards}`: 將當前名片索引乘以 `100`，表示每次移動的百分比。如果每次顯示一個名片，則每個名片佔據 100% 的寬度，移動的百分比就是名片的索引值 * 100。
+- `${currentIndex * 100 / visibleCards}`: 將當前名片索引乘以 `100`，表示每次移動的百分比。如果每次顯示一個名片，則每個名片佔據 100% 的寬度，移動的百分比就是名片的索引值 \* 100。
 
 ```html
 <div class="card-block overflow-hidden w-full">
-  <div class="flex transition-transform duration-500 ease-in-out"
-       :style="`transform: translateX(-${currentIndex * 100 / visibleCards}%);`">
+  <div
+    class="flex transition-transform duration-500 ease-in-out"
+    :style="`transform: translateX(-${currentIndex * 100 / visibleCards}%);`"
+  >
     ....
   </div>
 </div>
 ```
 
 再來是名片寬度，採用TailwindCSS的 Customizing Screens 標準，於不同視窗大小時，限制其單一名片最大寬度
+
 - `md`: 即表示 `@media(min-width:768px){...}`，當螢幕大於768px時，此div的寬度只顯示父層的50%。
 - `flex-shrink-0`: 當螢幕在變動，空間不夠時，元素會有被擠壓的可能，因此也需要設定此屬性，以防止UI被壓縮時跑版。
 
 ```html
-<div v-for="(person, index) in people"
-     :key="index"
-     class="card flex-shrink-0 w-full md:w-1/2 p-4">
-   ...
-</div>
+<div v-for="(person, index) in people" :key="index" class="card flex-shrink-0 w-full md:w-1/2 p-4">...</div>
 ```
 
 PreSlide Button，除了可以查看前一張名片外，當切換至第一張名片時，需使Button的樣式更新為disabled，才不會讓使用者無從得知目前的名片是否還有前一張可以繼續查閱
+
 - currentIndex更新時，會即時判斷其disabled值，以顯示button可使用狀態
 
 ```html
-<button @click="prevSlide"
-        :disabled="currentIndex === 0"
-        class="p-3 text-white rounded-lg"
-        :class="currentIndex === 0 ?
+<button
+  @click="prevSlide"
+  :disabled="currentIndex === 0"
+  class="p-3 text-white rounded-lg"
+  :class="currentIndex === 0 ?
                 'cursor-not-allowed bg-gray-300':
-                'bg-gray-700 hover:bg-gray-600'">
+                'bg-gray-700 hover:bg-gray-600'"
+>
   <i class="fas fa-arrow-left"></i>
 </button>
 ```
-```js
+
+```text
 prevSlide() {
   if (this.currentIndex > 0) {
     this.currentIndex--;
@@ -93,19 +111,23 @@ prevSlide() {
 ```
 
 NextSlide Button，與PreSlide Button類似
+
 - 最後一張卡片需以整個人名陣列的長度-1去取得，判斷其disalbed狀態
 
 ```html
-<button @click="nextSlide"
-        :disabled="currentIndex >= people.length - visibleCards"
-        class="p-3 text-white rounded-lg "
-        :class="currentIndex >= people.length - visibleCards ?
+<button
+  @click="nextSlide"
+  :disabled="currentIndex >= people.length - visibleCards"
+  class="p-3 text-white rounded-lg "
+  :class="currentIndex >= people.length - visibleCards ?
             'cursor-not-allowed bg-gray-300':
-            'bg-gray-700 hover:bg-gray-600'">
+            'bg-gray-700 hover:bg-gray-600'"
+>
   <i class="fas fa-arrow-right"></i>
 </button>
 ```
-```js
+
+```text
 nextSlide() {
   if (this.currentIndex < this.people.length - this.visibleCards) {
     this.currentIndex++;
@@ -113,6 +135,7 @@ nextSlide() {
 ```
 
 響應式顯示1張名片或2張名片
+
 - 於元素都已掛載後，加入監聽器，以接收螢幕寬度變化時的值判斷顯示1張名片或2張名片
 
 ```js
@@ -122,7 +145,7 @@ createApp({
   methods: {
     updateVisibleCards() {
       this.visibleCards = window.innerWidth >= 768 ? 2 : 1;
-    }
+    },
   },
   mounted() {
     this.updateVisibleCards();
@@ -130,30 +153,45 @@ createApp({
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.updateVisibleCards);
-  }
+  },
 }).mount('#app');
 ```
 
 滑鼠移動時的互動感
+
 - `hover:scale-105 duration-300 ease-in-out`: 以平滑的方式將滑鼠hover到的區塊在兩個維度（水平和垂直）等比例放大 5%，讓使用者可以foucs在當前滑動到的名片
 
 ```html
-<div class="bg-white rounded-lg shadow-lg border
+<div
+  class="bg-white rounded-lg shadow-lg border
      border-gray-200 p-6 transform transition-transform
-    hover:scale-105 duration-300 ease-in-out">
+    hover:scale-105 duration-300 ease-in-out"
+>
   ...
 </div>
 ```
 
 ## 自動切換 - 實作方式
-<iframe height="400" style="width: 100%;" scrolling="no" title="Custom RWD Swiper - AutoPlay" src="https://codepen.io/hanc1027/embed/JjgjqeN?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/hanc1027/pen/JjgjqeN">
-  Custom RWD Swiper - AutoPlay</a> by Han.C.Hsu (<a href="https://codepen.io/hanc1027">@hanc1027</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe><br/>
+
+<iframe
+  height="400"
+  style="width: 100%;"
+  scrolling="no"
+  title="Custom RWD Swiper - AutoPlay"
+  src="https://codepen.io/hanc1027/embed/JjgjqeN?default-tab=html%2Cresult&editable=true"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/hanc1027/pen/JjgjqeN">Custom RWD Swiper - AutoPlay</a> by Han.C.Hsu (
+  <a href="https://codepen.io/hanc1027">@hanc1027</a>) on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+<br />
 
 與基本卡片不同的點在：
 底部添加進度條樣式
+
 - `transition-all duration-300 ease-in-out`: 對所有可變屬性（包括寬度、邊框等）進行過渡動畫，同時 設定過渡時間為 300 毫秒，讓切換更平滑，使之從 `w-16` 變為 `w-8` 時，具有「伸縮感」。
 
 ```html
@@ -166,8 +204,8 @@ createApp({
     :class="currentIndex === index ?
            'bg-gray-600 border-gray-600 w-16' :
            'bg-gray-200 w-8'"
-   ></div>
- </div>
+  ></div>
+</div>
 ```
 
 - 自動計時器，於每2秒時，切換到下一張名片
@@ -191,30 +229,47 @@ beforeUnmount() {
 ```
 
 ## 卡片旋轉 - 實作方式
-<iframe height="400" style="width: 100%;" scrolling="no" title="Custom RWD Swiper - Rotate" src="https://codepen.io/hanc1027/embed/rNXNErY?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/hanc1027/pen/rNXNErY">
-  Custom RWD Swiper - Rotate</a> by Han.C.Hsu (<a href="https://codepen.io/hanc1027">@hanc1027</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe><br/>
+
+<iframe
+  height="400"
+  style="width: 100%;"
+  scrolling="no"
+  title="Custom RWD Swiper - Rotate"
+  src="https://codepen.io/hanc1027/embed/rNXNErY?default-tab=html%2Cresult&editable=true"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/hanc1027/pen/rNXNErY">Custom RWD Swiper - Rotate</a> by Han.C.Hsu (
+  <a href="https://codepen.io/hanc1027">@hanc1027</a>) on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+<br />
 
 點按時，切換當前卡片顯示正背面狀態
+
 - `flipCard()` ：點擊觸發當前 isFlipped 值來改變卡片的狀態，從而觸發翻轉效果
 - `transform-style: preserve-3d` ：讓子元素保持 3D 空間效果
 - `.card.flipped .card-inner`：當卡片的 `.flipped` 類別因`flipCard()`被添加時，觸發 `rotateY(180deg)` 翻轉效果，使卡片繞Y軸旋轉 180 度，顯示背面
 
 ```html
-<div v-for="(person, index) in people"
-     :key="index" class="card flex-shrink-0 w-full p-4"
-     :class="{'flipped': currentIndex === index && isFlipped}"
-      @click="flipCard">
+<div
+  v-for="(person, index) in people"
+  :key="index"
+  class="card flex-shrink-0 w-full p-4"
+  :class="{'flipped': currentIndex === index && isFlipped}"
+  @click="flipCard"
+>
   ...
 </div>
 ```
+
 ```js
 flipCard() {
   this.isFlipped = !this.isFlipped;
 }
 ```
+
 ```css
 .card-inner {
   position: relative;
@@ -229,6 +284,7 @@ flipCard() {
 ```
 
 翻轉後，正背面顯示效果
+
 - `backface-visibility`: hidden：用於隱藏當卡片旋轉後背面的內容，避免背面的元素在卡片翻轉時露出
 
 ```css
@@ -247,4 +303,5 @@ flipCard() {
 ```
 
 ## 結語
+
 卡片切換器，可以運用於許多場景，例如論壇討論區、公司人員介紹、電商平台產品區塊…，當專案中使用到的swiper功能沒有需要太多功能或多元性，不一定要引入大包swiper.js，可透過自行製作來達成目標，若需擴增功能時，也能全權掌握任一細節，將swiper再往上提昇一階，增加此切換器的亮眼程度!

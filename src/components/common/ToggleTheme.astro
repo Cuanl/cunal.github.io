@@ -20,11 +20,13 @@ const {
 
 {
   !(UI.theme && UI.theme.endsWith(':only')) && (
-    <button type="button" class={`${className}  dark:hidden`} aria-label={label} data-aw-toggle-color-scheme>
-      <Icon name="tabler:sun" class={iconClass} />
-    </button>
-    <button type="button" class={`${className} hidden dark:block`} aria-label={label} data-aw-toggle-color-scheme>
-      <Icon name="tabler:moon" class={iconClass} />
-    </button>
+    <>
+      <button type="button" class={`${className}  dark:hidden`} aria-label={label} data-aw-toggle-color-scheme>
+        <Icon name="tabler:sun" class={iconClass} />
+      </button>
+      <button type="button" class={`${className} hidden dark:block`} aria-label={label} data-aw-toggle-color-scheme>
+        <Icon name="tabler:moon" class={iconClass} />
+      </button>
+    </>
   )
 }

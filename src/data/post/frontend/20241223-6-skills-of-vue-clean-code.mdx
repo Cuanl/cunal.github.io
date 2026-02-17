@@ -5,18 +5,20 @@ excerpt: 在當今的前端開發領域，Vue.js 是極受歡迎的框架之一�
 image: https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Q4l5k-bABcOEAmKFMoLNWQ.png
 category: Frontend
 tags:
- - javascript
- - vue
+  - javascript
+  - vue
 ---
+
 import React from 'react';
 
-
 ## 前言
+
 在當今的前端開發領域，Vue.js 是極受歡迎的框架之一。其簡潔的語法和強大功能使得開發者能夠快速構建可維護、可擴展的應用。然而，隨著項目規模擴大，維護性和可讀性常常成為挑戰。此時，清晰、簡潔、易讀的代碼結構就顯得尤為重要。
 
 這篇文章將分享幾個運用「Clean Code」的技巧來提升Vue.js開發質量。這些技巧不僅能幫助工程師寫出更高效、易於維護的代碼，還能提高團隊合作效率，讓代碼更具可讀性和可理解性，從而在長期開發過程中減少技術負擔、降低錯誤風險。
 
 ## 1. 使用Composition API(組合式 API)編寫程式
+
 傳統的 Options API 元件，相信寫過Vue的大家都不陌生，在編寫小專案或剛起步時，可能會覺得這架構還不錯，變數在同一塊、函式在同一塊，但當專案架構開始變大時，使用的變數及函式越來越多，此時會漸漸覺得每次要找某一個相關聯的變數 & 函式時，它們好像散落在遠方。
 
 Composition API 就可以做到「功能切割」，將同一功能相關的內容都集中在一個區塊，提高可讀性 及 維護性。
@@ -24,11 +26,12 @@ Composition API 就可以做到「功能切割」，將同一功能相關的內�
 <img className="post-img" src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Q4l5k-bABcOEAmKFMoLNWQ.png" />
 
 ## 2. 遵守 Vue 命名規則
+
 - 大駝峰 (PascalCase)
   - 用於元件檔案名稱，應為多個單詞組合而成
   - 可使用於 template 中，無底線，ex. LoginModal
   - props中變數命名
-  ```js
+  ```text
     props: {
       welcomeMessage: {
         type: String,
@@ -40,154 +43,155 @@ Composition API 就可以做到「功能切割」，將同一功能相關的內�
   - 可使用於 template 中，全使用橫線連接，ex. login-modal
   - 父元素代入值至子元件時，需使用橫線連接
   ```html
-    <ChildComponent :welcome-message="嗨嗨" />
+  <ChildComponent :welcome-message="嗨嗨" />
   ```
 
 ## 3. 多使用複用元件 及 搭配 Slot
-  '複製' & '貼上'，應是工程師做起來最舒暢的事情，當對一個專案越來越熟悉，一旦有新需求、新元件需要製作時，第一直覺會開始搜尋腦中資料庫，思考以前有沒有做過類似的功能和元件，找到後就會很快樂的複製貼上，再稍微小改一下符合需求。
 
-  以前的我的確也會這樣，只想在短時間內達成目的就好，但發現專案越來越大時，若需求改動頻率高，且同樣的代碼於不同頁出現的次數過高，對於維護者而言是滿滿的技術債。
-  幸好曾踩過這樣的坑，便養成非必要時，同質性極高的功能，能組合成元件複用，盡可能製成元件。
+'複製' & '貼上'，應是工程師做起來最舒暢的事情，當對一個專案越來越熟悉，一旦有新需求、新元件需要製作時，第一直覺會開始搜尋腦中資料庫，思考以前有沒有做過類似的功能和元件，找到後就會很快樂的複製貼上，再稍微小改一下符合需求。
 
-  於Vue中製作元件，可採用`slot` 提昇其彈性，亦可於複用元件中，寫入document，以表明其用途，以下為一複用卡片元件實例：
-  ```vue
-  <!-- Card.vue -->
-  <template>
-    <div class="card">
-      <!-- Slot for the card header -->
-      <header class="card-header">
-        <slot name="header">我是標頭~</slot>
-      </header>
+以前的我的確也會這樣，只想在短時間內達成目的就好，但發現專案越來越大時，若需求改動頻率高，且同樣的代碼於不同頁出現的次數過高，對於維護者而言是滿滿的技術債。
+幸好曾踩過這樣的坑，便養成非必要時，同質性極高的功能，能組合成元件複用，盡可能製成元件。
 
-      <!-- Slot for the card body -->
-      <main main class="card-body">
-        <slot name="body">最亮眼的卡片~</slot>
-      </main>
+於Vue中製作元件，可採用`slot` 提昇其彈性，亦可於複用元件中，寫入document，以表明其用途，以下為一複用卡片元件實例：
 
-      <!-- Slot for the card footer -->
-      <footer class="card-footer">
-        <slot name="footer">地基是我</slot>
-      </footer>
-    </div>
-  </template>
+````vue
+<!-- Card.vue -->
+<template>
+  <div class="card">
+    <!-- Slot for the card header -->
+    <header class="card-header">
+      <slot name="header">我是標頭~</slot>
+    </header>
 
-  <script lang="ts">
-    /**
-     * Card Component
-    *
-    * This component provides a flexible layout using named slots for the header, body, and footer sections.
-    *
-    * ## Usage:
-    *
-    * ```vue
-    * <Card>
-    *   <template #header>
-    *     <h1>客製化標頭</h1>
-    *   </template>
-    *   <template #body>
-    *     <p>卡片內容寫於此</p>
-    *   </template>
-    *   <template #footer>
-    *     <button>點我點我</button>
-    *   </template>
-    * </Card>
-    * ```
-    *
-    * ## Slots:
-    * - `header`: Slot for the card's header content (optional, defaults to "Default Header").
-    * - `body`: Slot for the card's main content (optional, defaults to "Default Body").
-    * - `footer`: Slot for the card's footer content (optional, defaults to "Default Footer").
-    */
-    export default {
-      name: 'Card',
-    };
-  </script>
+    <!-- Slot for the card body -->
+    <main main class="card-body">
+      <slot name="body">最亮眼的卡片~</slot>
+    </main>
 
-  <style scoped>
-  .card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  .card-header,
-  .card-footer {
-    padding: 1em;
-    background-color: #f5f5f5;
-  }
-  .card-body {
-    padding: 1em;
-  }
-  </style>
-  ```
+    <!-- Slot for the card footer -->
+    <footer class="card-footer">
+      <slot name="footer">地基是我</slot>
+    </footer>
+  </div>
+</template>
+
+<script lang="ts">
+/**
+ * Card Component
+ *
+ * This component provides a flexible layout using named slots for the header, body, and footer sections.
+ *
+ * ## Usage:
+ *
+ * ```vue
+ * <Card>
+ *   <template #header>
+ *     <h1>客製化標頭</h1>
+ *   </template>
+ *   <template #body>
+ *     <p>卡片內容寫於此</p>
+ *   </template>
+ *   <template #footer>
+ *     <button>點我點我</button>
+ *   </template>
+ * </Card>
+ * ```
+ *
+ * ## Slots:
+ * - `header`: Slot for the card's header content (optional, defaults to "Default Header").
+ * - `body`: Slot for the card's main content (optional, defaults to "Default Body").
+ * - `footer`: Slot for the card's footer content (optional, defaults to "Default Footer").
+ */
+export default {
+  name: 'Card',
+};
+</script>
+
+<style scoped>
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.card-header,
+.card-footer {
+  padding: 1em;
+  background-color: #f5f5f5;
+}
+.card-body {
+  padding: 1em;
+}
+</style>
+````
 
 ## 4. 利用Composable，將共用邏輯抽出函式
-  與製作複用組件同樣的觀念，能不重複寫，盡可能抽出、封裝，使狀態與功能便於管理，當分析出接下來要開發的功能會重複使用於此專案，即可利用Composable函式，寫入共用邏輯，以減少重複的代碼。例如像時間轉換功能，於論壇內可能會需要顯示'剛剛'、'2小時前'、'昨天'、'2024-11-29'…等非正規化的時間格式，因此可編寫複用函式，並於多個地方引入使用。
 
-  **重點項：**
-    - 文件名應以 use 開頭，例如 `useContentWidthControl.ts`
-    - Composable函式約定用PascalCase命名，並以"use"作為開頭，例如 `useLinkList()`
-    - 一定要於`setup()`或`<script setup> `中使用，否則程式會報錯誤，就算Composable的函式還有包其它的Composable函式，也務必於function內進行引用。
+與製作複用組件同樣的觀念，能不重複寫，盡可能抽出、封裝，使狀態與功能便於管理，當分析出接下來要開發的功能會重複使用於此專案，即可利用Composable函式，寫入共用邏輯，以減少重複的代碼。例如像時間轉換功能，於論壇內可能會需要顯示'剛剛'、'2小時前'、'昨天'、'2024-11-29'…等非正規化的時間格式，因此可編寫複用函式，並於多個地方引入使用。
+
+**重點項：** - 文件名應以 use 開頭，例如 `useContentWidthControl.ts` - Composable函式約定用PascalCase命名，並以"use"作為開頭，例如 `useLinkList()` - 一定要於`setup()`或`<script setup> `中使用，否則程式會報錯誤，就算Composable的函式還有包其它的Composable函式，也務必於function內進行引用。
 
 ## 5. 使用Lint維持代碼品質
-  - `ESLint` & `Prettier`是編寫Code時的好夥伴，於團隊中協作時，每一位工程師多少會有自己的編寫習慣，例如雙引號 or 單引號、兩個空白為縮排 or 四個空白為縮排。一個專案除了邏輯上正確、精簡外，代碼的格式化也很重要，否則在維護、閱讀上會需要多花時間理解，可能還會造成誤解。
-  - 也可將Linting加入CI/CD流程中，使之自動化檢測 & code review
-  - 而之前會常常遇到CI/CD時，因Linter沒通過而無法deploy新commit，因此找了自動化檢復的工具 - 搭配Husky。可於每次提交代碼前，自動執行檢查 & 修復。
-    - `pnpm install husky`
-    - 配置 package.json，`scripts："prepare": "husky install"`
-    - `$ pnpm prepare`
-    - 於.husky資料夾下新增`pre-commit`檔案，貼上以下內容：
-    ```bash
-      #!/usr/bin/env sh
-      . "$(dirname -- "$0")/_/husky.sh"
 
-      npx lint-staged
-    ```
-    - 接下來於每次commit時，系統即會採用`.eslintrc.js`配置的標準進行檢查
+- `ESLint` & `Prettier`是編寫Code時的好夥伴，於團隊中協作時，每一位工程師多少會有自己的編寫習慣，例如雙引號 or 單引號、兩個空白為縮排 or 四個空白為縮排。一個專案除了邏輯上正確、精簡外，代碼的格式化也很重要，否則在維護、閱讀上會需要多花時間理解，可能還會造成誤解。
+- 也可將Linting加入CI/CD流程中，使之自動化檢測 & code review
+- 而之前會常常遇到CI/CD時，因Linter沒通過而無法deploy新commit，因此找了自動化檢復的工具 - 搭配Husky。可於每次提交代碼前，自動執行檢查 & 修復。
+  - `pnpm install husky`
+  - 配置 package.json，`scripts："prepare": "husky install"`
+  - `$ pnpm prepare`
+  - 於.husky資料夾下新增`pre-commit`檔案，貼上以下內容：
+
+  ```bash
+    #!/usr/bin/env sh
+    . "$(dirname -- "$0")/_/husky.sh"
+
+    npx lint-staged
+  ```
+
+  - 接下來於每次commit時，系統即會採用`.eslintrc.js`配置的標準進行檢查
 
 ## 6. 保持Template簡潔
-  - 避免使用過於複雜的邏輯判斷於Template中，可免除將js & 網頁架構太常混雜一起，降低閱讀性，於後續的維護中即可於同一區塊進行更新。
-  - 若不將邏輯判斷寫於Template中，即可善用`Computed`方法，創建易可理解的函式名，納入邏輯判斷，也可重複使用此函式於多個地方。
 
-  不佳範例：
-  ```vue
-  <template>
-    <div
-      v-if="isLogin && !isManageOn && !hasFirstFloor"
-      class="lg:hidden mt-4 py-5 border-y border-solid border-mean"
-      :class="
-        floorDataList.list.length === 1 &&
-          floorDataList.list[0].isFavorite
-          ? 'border-b-black'
-          : ''
-      "
-    >
-      <ToggleBtn />
-    </div>
-  </template>
-  ```
+- 避免使用過於複雜的邏輯判斷於Template中，可免除將js & 網頁架構太常混雜一起，降低閱讀性，於後續的維護中即可於同一區塊進行更新。
+- 若不將邏輯判斷寫於Template中，即可善用`Computed`方法，創建易可理解的函式名，納入邏輯判斷，也可重複使用此函式於多個地方。
 
-  修正後範例：
-  ```vue
-  <script>
-    const isShowToggleBtnBlock = computed(() => {
-      return !isLogin.value && !isManageOn.value && !hasFirstFloor.value
-    })
+不佳範例：
 
-    const bottomBorderStyle = computed(() =>
-        data.list.length === 1 && data.list[0].isFavorite ? 'border-b-black' : '')
-  </script>
+```vue
+<template>
+  <div
+    v-if="isLogin && !isManageOn && !hasFirstFloor"
+    class="lg:hidden mt-4 py-5 border-y border-solid border-mean"
+    :class="floorDataList.list.length === 1 && floorDataList.list[0].isFavorite ? 'border-b-black' : ''"
+  >
+    <ToggleBtn />
+  </div>
+</template>
+```
 
-  <template>
-    <div
-        v-if="isShowToggleBtnBlock"
-        class="lg:hidden mt-4 py-5 border-y border-solid border-mean"
-        :class="bottomBorderStyle"
-      >
-        <ToggleBtn />
-    </div>
-  </template>
-  ```
+修正後範例：
+
+```vue
+<script>
+const isShowToggleBtnBlock = computed(() => {
+  return !isLogin.value && !isManageOn.value && !hasFirstFloor.value;
+});
+
+const bottomBorderStyle = computed(() => (data.list.length === 1 && data.list[0].isFavorite ? 'border-b-black' : ''));
+</script>
+
+<template>
+  <div
+    v-if="isShowToggleBtnBlock"
+    class="lg:hidden mt-4 py-5 border-y border-solid border-mean"
+    :class="bottomBorderStyle"
+  >
+    <ToggleBtn />
+  </div>
+</template>
+```
 
 ## 結語
+
 以上是看過網路上其它人分享的文章後，篩選出自己其實滿需要的幾個要點，以及經歷過的一些專案經驗，再與大家分享，希望上述內容對讀者有所幫助。
