@@ -1,0 +1,49 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<div
+  class="fixed bottom-4 right-4 z-50 opacity-0 pointer-events-none transition-opacity duration-300"
+  id="scroll-to-top-container"
+>
+  <button
+    id="scroll-to-top-button"
+    class="transition-transform hover:scale-110 shadow-lg rounded-full p-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700"
+    aria-label="Back to Top"
+  >
+    <Icon name="tabler:arrow-up" class="w-6 h-6" />
+  </button>
+</div>
+
+<script>
+  const containerId = 'scroll-to-top-container';
+
+  function toggleVisibility() {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    if (window.scrollY > 300) {
+      container.classList.remove('opacity-0', 'pointer-events-none');
+      container.classList.add('opacity-100', 'pointer-events-auto');
+    } else {
+      container.classList.add('opacity-0', 'pointer-events-none');
+      container.classList.remove('opacity-100', 'pointer-events-auto');
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    const button = document.getElementById('scroll-to-top-button');
+    if (button) {
+      button.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // Remove before adding to avoid duplicates
+    window.removeEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', toggleVisibility);
+
+    // Initial check
+    toggleVisibility();
+  });
+</script>
