@@ -74,7 +74,7 @@ export default defineConfig({
   ],
 
   image: {
-    domains: ['cdn.pixabay.com', 'miro.medium.com', 'blog-image.cuanl.app'],
+    domains: ['cdn.pixabay.com', 'miro.medium.com', 'blog-image.cuanl.app', 'github.com', 'i.imgur.com'],
   },
 
   markdown: {

@@ -15,10 +15,12 @@ const createPath = (...params: string[]) => {
 
 const BASE_PATHNAME = SITE.base || '/';
 
+const hasCJK = (text: string) => /[\u2e80-\u9fff\uf900-\ufaff\ufe30-\ufe4f]/.test(text);
+
 export const cleanSlug = (text = '') =>
   trimSlash(text)
     .split('/')
-    .map((slug) => slugify(slug))
+    .map((slug) => (hasCJK(slug) ? slug.trim() : slugify(slug)))
     .join('/');
 
 export const BLOG_BASE = cleanSlug(APP_BLOG?.list?.pathname);

@@ -1,0 +1,70 @@
+---
+import { Icon } from 'astro-icon/components';
+import Headline from '~/components/blog/Headline.astro';
+import Header from '~/components/widgets/Header.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { fetchPosts } from '~/utils/blog';
+import { getPermalink } from '~/utils/permalinks';
+
+export const prerender = true;
+
+const posts = await fetchPosts();
+
+// 收集所有 tags 並統計文章數
+const tagMap = new Map<string, { title: string; slug: string; count: number }>();
+for (const post of posts) {
+  if (Array.isArray(post.tags)) {
+    for (const tag of post.tags) {
+      if (tagMap.has(tag.slug)) {
+        tagMap.get(tag.slug)!.count++;
+      } else {
+        tagMap.set(tag.slug, { title: tag.title, slug: tag.slug, count: 1 });
+      }
+    }
+  }
+}
+
+// 依文章數降冪排序
+const tags = Array.from(tagMap.values()).sort((a, b) => b.count - a.count);
+
+const metadata = { title: 'Tags' };
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="announcement"></Fragment>
+  <Fragment slot="header">
+    <Header
+      position="left"
+      links={[
+        { text: 'Blog', href: '/blog' },
+        { text: 'Tag', href: '/blog/tags' },
+        { text: 'About', href: '/about' },
+      ]}
+      isSticky
+      showToggleTheme
+    />
+  </Fragment>
+
+  <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <Headline subtitle={`共 ${tags.length} 個標籤`}>
+      Tags
+    </Headline>
+
+    <ul class="flex flex-wrap gap-3 justify-center">
+      {tags.map((tag) => (
+        <li>
+          <a
+            href={getPermalink(tag.slug, 'tag')}
+            class="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary transition-colors duration-200 shadow-sm hover:shadow-md"
+          >
+            <Icon name="tabler:tag" class="w-3.5 h-3.5 text-muted dark:text-slate-400 group-hover:text-primary transition-colors duration-200" />
+            <span class="font-medium text-sm">{tag.title}</span>
+            <span class="text-xs text-muted dark:text-slate-400 bg-gray-100 dark:bg-slate-700 rounded-full px-1.5 py-0.5 leading-none">
+              {tag.count}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>
