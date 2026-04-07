@@ -46,6 +46,15 @@ const {
 } = Astro.props;
 
 const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
+
+const toPathname = (href?: string) => {
+  if (!href) return '';
+  try {
+    return `/${trimSlash(new URL(href, Astro.url).pathname)}`;
+  } catch {
+    return `/${trimSlash(href)}`;
+  }
+};
 ---
 
 <header
@@ -102,11 +111,12 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
                     {links.map(({ text: text2, href: href2, image: image2 }) => (
                       <li>
                         <a
+                          data-aw-no-reload={toPathname(href2) === currentPath ? 'true' : undefined}
                           class:list={[
                             'first:rounded-t last:rounded-b md:hover:bg-gray-100 hover:text-link dark:hover:text-white dark:hover:bg-gray-700 py-2 px-5 flex items-center gap-2 whitespace-no-wrap',
                             { 'aw-link-active': href2 === currentPath },
                           ]}
-                          href={href2}
+                          href={toPathname(href2) === currentPath ? undefined : href2}
                         >
                           {image2 && <img src={image2} alt="" class="h-4 w-4 inline-block" />}
                           {text2}
@@ -117,11 +127,12 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
                 </>
               ) : (
                 <a
+                  data-aw-no-reload={toPathname(href) === currentPath ? 'true' : undefined}
                   class:list={[
                     'hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap',
                     { 'aw-link-active': href === currentPath },
                   ]}
-                  href={href}
+                  href={toPathname(href) === currentPath ? undefined : href}
                 >
                   {text}
                 </a>

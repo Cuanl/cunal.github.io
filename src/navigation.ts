@@ -11,7 +11,7 @@ export const headerData = {
       links: [
         {
           text: '思購抑',
-          href: getPermalink('/collection/insight-buy˝'),
+          href: getPermalink('/collection/insight-buy'),
           image: '/images/sigouyi-icon.svg',
         },
       ],
