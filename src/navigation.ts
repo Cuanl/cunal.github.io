@@ -7,11 +7,11 @@ export const headerData = {
       href: getPermalink('/blog'),
     },
     {
-      text: 'Collection',
+      text: 'Collections',
       links: [
         {
           text: '思購抑',
-          href: getPermalink('/collection/sigouyi'),
+          href: getPermalink('/collection/insight-buy˝'),
           image: '/images/sigouyi-icon.svg',
         },
       ],

@@ -1,0 +1,407 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Features from '~/components/widgets/Features.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Content from '~/components/widgets/Content.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const imgHomeCooling = 'https://blog-image.cuanl.app/collections/insight-buy/home-cooling.png';
+const imgAddRecord = 'https://blog-image.cuanl.app/collections/insight-buy/add-record.png';
+const imgAddCooldown = 'https://blog-image.cuanl.app/collections/insight-buy/add-cooldown.png';
+const imgAnalytics = 'https://blog-image.cuanl.app/collections/insight-buy/analytics.png';
+const imgLogin = 'https://blog-image.cuanl.app/collections/insight-buy/login.png';
+
+const metadata = {
+  title: '思購抑 — 延遲滿足，理性消費',
+  description: '思購抑是一款幫助你在衝動購物前暫停下來的工具。透過冷靜期機制、情緒記錄與三問題回顧法，讓每一筆消費都是深思熟慮的決定。',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero ******************************************* -->
+  <Hero
+    tagline="思購抑"
+    actions={[
+      {
+        variant: 'primary',
+        text: '立即使用',
+        href: 'https://insight-buy.cuanl.app',
+        target: '_blank',
+        icon: 'tabler:rocket',
+      },
+      {
+        text: '了解更多',
+        href: '#how-it-works',
+        icon: 'tabler:arrow-down',
+      },
+    ]}
+    image={{
+      src: imgHomeCooling,
+      alt: '思購抑 App 首頁畫面',
+    }}
+  >
+    <Fragment slot="title">
+      <span class="text-accent dark:text-white">想要 / 需要</span><br/>一念之間
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <strong>思購抑</strong> 是一款幫助你對抗衝動消費的工具。記錄購物衝動、設定冷靜期，<br/>透過三問題回顧法做出真正符合自身需求的消費決策
+    </Fragment>
+  </Hero>
+
+  <!-- Stats ****************************************** -->
+  <Stats
+    title="數字說明一切"
+    stats={[
+      { title: '成就徽章', amount: '8 個' },
+      { title: '冷靜期選項', amount: '4 種' },
+      { title: '消費類別', amount: '10 種' },
+      { title: '情緒類型', amount: '8 種' },
+    ]}
+  />
+
+  <!-- How It Works *********************************** -->
+  <Steps
+    id="how-it-works"
+    title="四步驟，讓衝動變理智"
+    tagline="使用方式"
+    subtitle="不需要複雜的設定，只需要四個步驟，就能建立屬於自己的理性消費習慣"
+    items={[
+      {
+        title: '第一步：<span class="font-medium">記錄衝動</span>',
+        description:
+          '當購物念頭出現時，立刻打開 App 記錄下來。填入品名、金額、商品類別，以及當下的情緒狀態與購買動機，越具體越好 - 這是寫給未來自己的一封信。',
+        icon: 'tabler:pencil',
+      },
+      {
+        title: '第二步：<span class="font-medium">進入冷靜期</span>',
+        description:
+          '選擇 3 / 7 / 14 / 30 天的冷靜時間。系統不催你買，只是讓時間發酵。小額衝動建議 3 天，一般消費推薦 7 天，大額物品可選 14 或 30 天。',
+        icon: 'tabler:snowflake',
+      },
+      {
+        title: '第三步：<span class="font-medium">回顧與反思</span>',
+        description:
+          '冷靜期結束後，App 提醒你回來用三個問題重新審視：<br/>① 你還想要嗎？<br/>② 這會改善你的生活嗎？<br/>③ 財務上負擔得起嗎？<br/>AI 教練也會根據你當初寫的動機，給出個人化建議。',
+        icon: 'tabler:search',
+      },
+      {
+        title: '第四步：<span class="font-medium">做出決定</span>',
+        description:
+          '放棄 or 購買，或再延長冷靜期 - 三種結果都會被記錄下來，累積成你的消費模式分析。每次放棄都讓你離省下第一個 5,000 元更近一步。',
+        icon: 'tabler:target',
+      },
+    ]}
+    image={{
+      src: imgAddRecord,
+      alt: '新增記錄頁面',
+    }}
+  />
+
+  <!-- Features (core) ******************************** -->
+  <Features
+    id="features"
+    tagline="核心功能"
+    title="記下每一次衝動，也更懂自己"
+    subtitle="思購抑設計的每一個功能，都在幫助建立對消費行為更深的自我覺察"
+    items={[
+      {
+        title: '想要 vs 需要',
+        description:
+          '每筆紀錄都要先分類：這是「想要」還是「需要」？AI 之後也會給你它的判斷，有時候看到 AI 的回饋，才驚覺自己一直把想要說成需要。',
+        icon: 'tabler:bulb',
+      },
+      {
+        title: '情緒購物追蹤',
+        description:
+          '8 種情緒標籤（開心、壓力大、無聊、焦慮、犒賞自己、難過、興奮、一般）幫你找出最容易失守的時刻 - 很多人發現自己在「壓力大」時最容易衝動。',
+        icon: 'tabler:mood-smile',
+      },
+      {
+        title: '消費分析儀表板',
+        description:
+          '放棄率、累計省下金額、常見消費類別、情緒分佈 - 這些數字組合起來，是一面你從未照過的消費習慣鏡子。',
+        icon: 'tabler:chart-bar',
+      },
+      {
+        title: '成就徽章系統',
+        description:
+          '從「踏出第一步」到「月修士」，共 8 個成就等你解鎖。遊戲化機制讓堅持理性消費不再枯燥，每次解鎖都是真實的自我認可。',
+        icon: 'tabler:trophy',
+      },
+      {
+        title: 'AI 教練筆記',
+        description:
+          '分析頁有一張 AI 教練筆記，根據你的實際資料給出個人化洞察與本週建議，不是泛泛而談，而是真的看過你的數字才說的。',
+        icon: 'tabler:robot',
+      },
+      {
+        title: '連續紀錄追蹤',
+        description:
+          '連續記錄天數是一個隱藏的行為指標 - 你不需要每天都拒絕購物，只需要每天都「有意識地面對」自己的消費衝動。',
+        icon: 'tabler:flame',
+      },
+    ]}
+  />
+
+  <!-- Screenshot: 冷靜期選擇 ************************* -->
+  <Content
+    tagline="冷靜期機制"
+    title="讓時間成為你最強大的消費顧問"
+    isReversed
+    items={[
+      {
+        title: '3 天 - 適合小額衝動',
+        description: '一時心動的小東西，三天後通常就想不起來了',
+        icon: 'tabler:clock',
+      },
+      {
+        title: '7 天 - 標準推薦（最多人選）',
+        description: '一週的時間足以讓大多數購物衝動自然冷卻',
+        icon: 'tabler:star',
+      },
+      {
+        title: '14 天 - 大額購物',
+        description: '幾千到一萬元的物品，值得給自己兩週的緩衝',
+        icon: 'tabler:shield-check',
+      },
+      {
+        title: '30 天 - 奢侈品 / 大型投資',
+        description: '一個月的冷靜期讓你真正確認這是理智的決定',
+        icon: 'tabler:diamond',
+      },
+    ]}
+    image={{
+      src: imgAddCooldown,
+      alt: '冷靜期選擇畫面',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        不同金額，不同冷靜節奏
+      </h3>
+      你不需要記住任何規則，App 會根據你的選擇自動設定到期提醒
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-teal-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Screenshot: 分析頁 ***************************** -->
+  <Content
+    tagline="消費分析"
+    title="數字不說謊<br/>你的購物模式在這裡"
+    items={[
+      {
+        title: '放棄率',
+        description: '顯示有多少「想要」在冷靜期後自然退燒。放棄不是目標，而是幫你把需要與衝動分清楚',
+        icon: 'tabler:percentage',
+      },
+      {
+        title: '累計省下金額',
+        description: '每一筆放棄的消費金額都會累計在這裡，讓你看到「不買」的真實價值',
+        icon: 'tabler:coin',
+      },
+      {
+        title: '情緒 × 類別交叉分析',
+        description: '找出你在什麼情緒、買什麼類型的東西最容易失控，這才是真正有用的洞察',
+        icon: 'tabler:chart-dots',
+      },
+    ]}
+    image={{
+      src: imgAnalytics,
+      alt: '消費分析頁面',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        看懂自己的消費模式
+      </h3>
+      分析不是為了批判，而是為了讓你更了解自己 - 下一次衝動來的時候，你已經知道它的樣子了。
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-amber-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Screenshot: 登入 / 註冊 ************************ -->
+  <Content
+    tagline="帳號系統"
+    title="跨裝置同步，安全有保障"
+    isReversed
+    items={[
+      {
+        title: 'JWT + HttpOnly Cookie',
+        description: 'Access Token 存在記憶體，Refresh Token 藏在 HttpOnly Cookie，不怕 XSS 竊取。',
+        icon: 'tabler:lock',
+      },
+      {
+        title: 'React Query 即時同步',
+        description: '資料在背景自動更新，換裝置也能立刻看到最新紀錄。',
+        icon: 'tabler:refresh',
+      },
+      {
+        title: 'PWA 可安裝',
+        description: '加入主畫面後，從桌面圖示打開就像原生 App，iOS / Android / 桌面皆支援。',
+        icon: 'tabler:device-mobile',
+      },
+    ]}
+    image={{
+      src: imgLogin,
+      alt: '登入頁面',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        免費，無需下載
+      </h3>
+      用瀏覽器打開網址，點「加入主畫面」，完成。你的消費紀錄安全地存在雲端
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Achievements *********************************** -->
+  <Features2
+    id="achievements"
+    tagline="成就系統"
+    title="每一個理性決定，都值得被記住"
+    subtitle="共 8 個成就徽章，從第一筆紀錄到連續 30 天，用遊戲化方式記錄你的進步。<br/>(將持續加入新成就)"
+    items={[
+      {
+        title: '🌱 踏出第一步',
+        description: '建立第 1 筆紀錄後解鎖。每段旅程都從這裡開始',
+      },
+      {
+        title: '🛡️ 第一次說不',
+        description: '放棄第 1 次購買。拒絕衝動的第一刀最難，你做到了',
+      },
+      {
+        title: '🔥 七天修煉',
+        description: '連續 7 天記錄衝動。習慣就是這樣一天一天養成的。',
+      },
+      {
+        title: '💰 省下 5,000 元',
+        description: '累計放棄金額達 $5,000 TWD。一頓好吃的，還是一件不需要的東西？',
+      },
+      {
+        title: '🏆 意志力大師',
+        description: '累計放棄 10 次購買。你的理性肌肉已經練起來了',
+      },
+      {
+        title: '💎 萬元衛士',
+        description: '累計省下 $10,000 TWD。相當於一次不錯的短途旅行',
+      },
+      {
+        title: '📔 老手回憶錄',
+        description: '建立 30 筆紀錄。你已經積累了足夠認識自己的資料',
+      },
+      {
+        title: '🌙 月修士',
+        description: '連續 30 天記錄。恭喜，這已經是一個真正的習慣了',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-teal-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+
+  <!-- Three-question Review ************************** -->
+  <Features
+    tagline="三問題回顧法"
+    title="冷靜期結束時，問自己三件事"
+    subtitle="這三個問題不是在評判你，而是幫你從不同角度重新看待這筆消費"
+    columns={3}
+    items={[
+      {
+        title: '① 你還想要嗎？',
+        description:
+          '意願確認。冷靜期前後的渴望程度往往差距很大，如果熱度已經退了，答案就很清楚了',
+        icon: 'tabler:heart-question',
+      },
+      {
+        title: '② 這會改善你的生活嗎？',
+        description:
+          '生活影響評估。想像擁有它之後六個月的樣子 - 它真的會讓你更好嗎？還是只是填補某個當下的空虛？',
+        icon: 'tabler:list-check',
+      },
+      {
+        title: '③ 財務上負擔得起嗎？',
+        description:
+          '財務評估。不是「帳戶裡有沒有這筆錢」，而是「這筆錢花掉之後，你的財務是否依然健康？」',
+        icon: 'tabler:currency-dollar',
+      },
+    ]}
+  />
+
+  <!-- FAQs ******************************************* -->
+  <FAQs
+    tagline="常見問題"
+    title="你可能想知道的事"
+    classes={{ container: 'max-w-6xl' }}
+    items={[
+      {
+        title: '思購抑完全免費嗎？',
+        description:
+          '是的，目前完全免費，不需要信用卡，也不需要下載任何東西。用瀏覽器打開就能用，也可以加入主畫面讓它像 App 一樣運作。',
+      },
+      {
+        title: '我的資料安全嗎？',
+        description:
+          'Auth 採用 JWT + HttpOnly Cookie 雙 token 架構，Access Token 存在記憶體（不存 localStorage），Refresh Token 藏在 HttpOnly Cookie 中，大幅降低 XSS 竊取風險。',
+      },
+      {
+        title: '冷靜期到了會通知我嗎？',
+        description:
+          '目前版本會在 App 首頁的「待回顧」分頁顯示到期的紀錄，並以數字 badge 提醒。Push Notification 功能在施工中~',
+      },
+      {
+        title: 'AI 教練的建議是怎麼產生的？',
+        description:
+          '分析頁的 AI 教練筆記根據你的實際紀錄資料（總筆數、放棄率、常見情緒、類別）產生個人化洞察，不是通用範本，每個人看到的內容都不同。',
+      },
+      {
+        title: '「冷靜期」的概念是從哪來的？',
+        description:
+          '延遲滿足（Delayed Gratification）是行為心理學中有大量研究支持的消費決策策略。給自己一段等待期，能讓大腦從「情緒驅動」切換到「理性評估」模式，大幅降低衝動購物的機率。',
+      },
+      {
+        title: '思購抑是什麼意思？',
+        description:
+          '「思購抑」是「思考購物衝動的抑制」的縮寫，也是英文名 InsightBuy 的對應概念 - 在購買前多一個思考的空間，insight（洞察）就在這個空間裡發生。',
+      },
+    ]}
+  />
+
+  <!-- CTA ******************************************** -->
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: '立即開始使用',
+        href: 'https://insight-buy.cuanl.app',
+        target: '_blank',
+        icon: 'tabler:rocket',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      下一次衝動來臨時，<br class="block sm:hidden" />
+      <span class="sm:whitespace-nowrap">先記錄下來</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      免費使用 · 無需下載 · 支援 iOS / Android / 桌面 <br class="hidden md:inline" />
+      你的消費習慣，值得更多的自我覺察
+    </Fragment>
+  </CallToAction>
+</Layout>
