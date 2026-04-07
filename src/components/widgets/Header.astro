@@ -102,7 +102,7 @@ const toPathname = (href?: string) => {
                 <>
                   <button
                     type="button"
-                    class="hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap"
+                    class="hover:text-link dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/60 rounded px-4 py-3 flex items-center whitespace-nowrap transition-colors"
                   >
                     {text}{' '}
                     <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden md:inline" />
@@ -113,10 +113,15 @@ const toPathname = (href?: string) => {
                         <a
                           data-aw-no-reload={toPathname(href2) === currentPath ? 'true' : undefined}
                           class:list={[
-                            'first:rounded-t last:rounded-b md:hover:bg-gray-100 hover:text-link dark:hover:text-white dark:hover:bg-gray-700 py-2 px-5 flex items-center gap-2 whitespace-no-wrap',
-                            { 'aw-link-active': href2 === currentPath },
+                            'first:rounded-t last:rounded-b hover:bg-gray-100 dark:hover:bg-gray-700/60 hover:text-link dark:hover:text-white py-2 px-5 flex items-center gap-2 whitespace-no-wrap transition-colors',
+                            {
+                              'aw-link-active bg-gray-200 dark:bg-gray-700 pointer-events-none cursor-default hover:text-default dark:hover:text-default':
+                                toPathname(href2) === currentPath,
+                            },
                           ]}
                           href={toPathname(href2) === currentPath ? undefined : href2}
+                          aria-current={toPathname(href2) === currentPath ? 'page' : undefined}
+                          aria-disabled={toPathname(href2) === currentPath ? 'true' : undefined}
                         >
                           {image2 && <img src={image2} alt="" class="h-4 w-4 inline-block" />}
                           {text2}
@@ -129,10 +134,15 @@ const toPathname = (href?: string) => {
                 <a
                   data-aw-no-reload={toPathname(href) === currentPath ? 'true' : undefined}
                   class:list={[
-                    'hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap',
-                    { 'aw-link-active': href === currentPath },
+                    'hover:text-link dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/60 rounded px-4 py-3 flex items-center whitespace-nowrap transition-colors',
+                    {
+                      'aw-link-active bg-gray-200 dark:bg-gray-700 pointer-events-none cursor-default hover:text-default dark:hover:text-default':
+                        toPathname(href) === currentPath,
+                    },
                   ]}
                   href={toPathname(href) === currentPath ? undefined : href}
+                  aria-current={toPathname(href) === currentPath ? 'page' : undefined}
+                  aria-disabled={toPathname(href) === currentPath ? 'true' : undefined}
                 >
                   {text}
                 </a>
