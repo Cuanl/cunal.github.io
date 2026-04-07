@@ -21,12 +21,13 @@ export default {
       },
 
       animation: {
-        fade: 'fadeInUp 1s both',
+        fade: 'fadeInUp 350ms ease-out both',
       },
 
       keyframes: {
         fadeInUp: {
-          '0%': { opacity: 0, transform: 'translateY(2rem)' },
+          // Keep content visible; use subtle motion only to avoid "slow loading" feel.
+          '0%': { opacity: 1, transform: 'translateY(0.5rem)' },
           '100%': { opacity: 1, transform: 'translateY(0)' },
         },
       },
